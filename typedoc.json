@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./src/library/index.ts"],
+  "out": "docs",
+  "readme": "package/README.md",
+  "name": "platjs",
+  "githubPages": true,
+  "includeVersion": true,
+  "logLevel": "Verbose"
+}
