@@ -24,10 +24,14 @@ const player = new ControlledBody({
   height: 30,
   image: images.playerLeft,
   layer: 1,
+  wallJump: true,
   update: (self) => {
-    if (self.v.x < 0) {
+    if ((self.keys.a || self.keys.left) && !(self.keys.d || self.keys.right)) {
       self.image = images.playerLeft;
-    } else if (self.v.x > 0) {
+    } else if (
+      !(self.keys.a || self.keys.left) &&
+      (self.keys.d || self.keys.right)
+    ) {
       self.image = images.playerRight;
     }
   },
@@ -72,6 +76,12 @@ window.addEventListener("mouseup", ({ clientX, clientY }) => {
 
 const animationLoop = () => {
   renderer.update();
+  if (player.y - player.height / 2 > renderer.height) {
+    player.v.y = 0;
+    player.v.x = 0;
+    player.x = 30;
+    player.y = 30;
+  }
   renderer.render();
 
   if (dragging) {

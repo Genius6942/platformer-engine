@@ -4,7 +4,7 @@ import PhysicalBody from "./physicalBody";
 export default class ControlledBody extends PhysicalBody {
   maxXSpeed: number;
   jumpVel: number;
-  private keys: {
+  keys: {
     w: boolean;
     a: boolean;
     s: boolean;
@@ -15,6 +15,14 @@ export default class ControlledBody extends PhysicalBody {
     left: boolean;
   };
   xAcceleration: number;
+  jumps: number;
+  maxJumps: number;
+  wallJumps: boolean;
+  wallPushOffSpeed: number;
+  /**
+   * 0 for left, 1 for center, 2 for right
+   */
+  wallSide: 0 | 1 | 2;
   constructor({
     x = 0,
     y = 0,
@@ -27,7 +35,10 @@ export default class ControlledBody extends PhysicalBody {
     render = null,
     update = () => {},
     maxXSpeed = 5,
-    jumpVel = 10,
+    jumpVel = 13,
+    maxJumps = 1,
+    wallJump = false,
+    wallPushOffSpeed = 3,
   }: {
     x?: number;
     y?: number;
@@ -41,6 +52,9 @@ export default class ControlledBody extends PhysicalBody {
     update?: (self: ControlledBody) => void;
     maxXSpeed?: number;
     jumpVel?: number;
+    maxJumps?: number;
+    wallJump?: boolean;
+    wallPushOffSpeed?: number;
   }) {
     super({
       x,
@@ -60,6 +74,12 @@ export default class ControlledBody extends PhysicalBody {
 
     this.maxXSpeed = maxXSpeed;
     this.jumpVel = jumpVel;
+    this.maxJumps = maxJumps;
+    this.jumps = 0;
+
+    this.wallJumps = wallJump;
+    this.wallPushOffSpeed = wallPushOffSpeed;
+    this.wallSide = 1;
 
     this.keys = {
       w: false,
@@ -85,7 +105,15 @@ export default class ControlledBody extends PhysicalBody {
   }
 
   jump() {
-    this.v.y = -this.jumpVel;
+    if (this.jumps < this.maxJumps) {
+      this.v.y = -this.jumpVel;
+      this.jumps++;
+      if (this.wallSide === 0) {
+        this.v.x = -this.wallPushOffSpeed;
+      } else if (this.wallSide === 2) {
+        this.v.x = this.wallPushOffSpeed;
+      }
+    }
   }
 
   bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true }) {

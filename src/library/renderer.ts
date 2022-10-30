@@ -1,3 +1,4 @@
+import ControlledBody from "./controlledBody";
 import GameObject from "./object";
 import PhysicalBody from "./physicalBody";
 import StaticBody from "./staticBody";
@@ -6,6 +7,7 @@ class Renderer extends HTMLCanvasElement {
   ctx: CanvasRenderingContext2D;
   objects: GameObject[];
   physics?: { gravity: number };
+  lockStatus?: { object: number; };
   constructor() {
     super();
 
@@ -17,6 +19,8 @@ class Renderer extends HTMLCanvasElement {
     this.objects = [];
 
     this.render = this.render.bind(this);
+
+    
   }
 
   /**
@@ -32,7 +36,7 @@ class Renderer extends HTMLCanvasElement {
     return this;
   }
 
-  enablePhysics({ gravity = .7 }) {
+  enablePhysics({ gravity = 0.7 }) {
     this.physics = {
       gravity,
     };
@@ -71,6 +75,12 @@ class Renderer extends HTMLCanvasElement {
     return this;
   }
 
+  lock(object: GameObject) {
+    this.lockStatus = {
+      object: object._randomId,
+    };
+  }
+
   update(mulitplier = 1) {
     this.objects.forEach((object) => {
       if (this.physics) {
@@ -96,6 +106,7 @@ class Renderer extends HTMLCanvasElement {
           };
 
           object.isOnBody = false;
+          if (object instanceof ControlledBody) object.wallSide = 1;
           for (const body of this.objects) {
             if (body instanceof StaticBody) {
               if (body.collides(big)) {
@@ -104,6 +115,7 @@ class Renderer extends HTMLCanvasElement {
                   object.y = body.y - body.height / 2 - object.height / 2;
                   object.v.y = 0;
                   object.isOnBody = true;
+                  if (object instanceof ControlledBody) object.jumps = 0;
                 } else if (
                   startY - object.height / 2 >=
                   body.y + body.height / 2
@@ -116,11 +128,19 @@ class Renderer extends HTMLCanvasElement {
                 ) {
                   object.x = body.x - body.width / 2 - object.width / 2;
                   object.v.x = 0;
+                  if (object instanceof ControlledBody && object.wallJumps) {
+                    object.jumps = 0;
+                    object.wallSide = 0;
+                  }
                 } else if (
                   startX - object.width / 2 >=
                   body.x + body.width / 2
                 ) {
                   object.x = body.x + body.width / 2 + object.width / 2;
+                  if (object instanceof ControlledBody && object.wallJumps) {
+                    object.jumps = 0;
+                    object.wallSide = 2;
+                  }
                   object.v.x = 0;
                 }
               }
