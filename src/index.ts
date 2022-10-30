@@ -38,6 +38,7 @@ const player = new ControlledBody({
 });
 player.bindKeyboardControls({});
 renderer.add(player);
+renderer.camera.lock(player, { minYSpace: -Infinity });
 
 renderer.add(
   new StaticBody({ x: 0, y: 500, width: 300, height: 100, color: "black" })
@@ -63,6 +64,13 @@ window.addEventListener("mouseup", ({ clientX, clientY }) => {
     dragEnd = { x: clientX, y: clientY };
     dragging = false;
     dragging = false;
+
+    dragStart.x += -renderer.width / 2 + renderer.camera.pos.x;
+    dragStart.y += -renderer.height / 2 + renderer.camera.pos.y;
+
+    dragEnd.x += -renderer.width / 2 + renderer.camera.pos.x;
+    dragEnd.y += -renderer.height / 2 + renderer.camera.pos.y;
+
     const x =
       Math.min(dragStart.x, dragEnd.x) + Math.abs(dragEnd.x - dragStart.x) / 2;
     const y =

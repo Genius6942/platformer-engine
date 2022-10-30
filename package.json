@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "transfer": "rm -r ./package/src/* && cp -R ./src/library/* ./package/src"
   },
   "devDependencies": {
     "typescript": "^4.6.4",

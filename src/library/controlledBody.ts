@@ -95,7 +95,7 @@ export default class ControlledBody extends PhysicalBody {
     this.xAcceleration = 0.3;
   }
 
-  get preventFriction() {
+  getPreventFriction() {
     let val = 0;
     if (this.keys.right) val++;
     if (this.keys.left) val--;

@@ -57,7 +57,7 @@ export default class PhysicalBody extends GameObject {
   applyFriction(multiplier: number) {
     if (!this.isOnBody) return;
     // @ts-ignore
-    if (this.keys && this.preventFriction) return;
+    if (this.keys && this.getPreventFriction()) return;
     if (this.friction * multiplier > Math.abs(this.v.x)) {
       this.v.x = 0;
     } else {

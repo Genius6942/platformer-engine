@@ -1,3 +1,4 @@
+import Camera from "./camera";
 import ControlledBody from "./controlledBody";
 import GameObject from "./object";
 import PhysicalBody from "./physicalBody";
@@ -7,7 +8,7 @@ class Renderer extends HTMLCanvasElement {
   ctx: CanvasRenderingContext2D;
   objects: GameObject[];
   physics?: { gravity: number };
-  lockStatus?: { object: number; };
+  camera: Camera;
   constructor() {
     super();
 
@@ -20,7 +21,7 @@ class Renderer extends HTMLCanvasElement {
 
     this.render = this.render.bind(this);
 
-    
+    this.camera = new Camera(this);
   }
 
   /**
@@ -73,12 +74,6 @@ class Renderer extends HTMLCanvasElement {
   mount(container: HTMLElement) {
     container.appendChild(this);
     return this;
-  }
-
-  lock(object: GameObject) {
-    this.lockStatus = {
-      object: object._randomId,
-    };
   }
 
   update(mulitplier = 1) {
@@ -152,11 +147,17 @@ class Renderer extends HTMLCanvasElement {
   }
 
   render() {
+    const { x: cameraX, y: cameraY } = this.camera.update();
+
     this.ctx.clearRect(0, 0, this.width, this.height);
+
+    this.ctx.translate(this.width / 2 - cameraX, this.height / 2 - cameraY);
 
     this.objects
       .sort((a, b) => a.layer - b.layer)
       .forEach((object) => object._render(this.ctx));
+
+    this.ctx.translate(-this.width / 2 + cameraX, -this.height / 2 + cameraY);
   }
 }
 
