@@ -39,7 +39,7 @@ const player = new ControlledBody({
 player.bindKeyboardControls({});
 renderer.add(player);
 
-const body = renderer.add(
+renderer.add(
   new StaticBody({ x: 0, y: 500, width: 300, height: 100, color: "black" })
 );
 
