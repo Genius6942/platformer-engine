@@ -1,4 +1,4 @@
-import { ControlledBody, Renderer, loadImages, StaticBody } from "./library";
+import { ControlledBody, Renderer, loadImages, StaticBody } from "../library";
 import playerLeftImg from "./img/dragon.png";
 import playerRightImg from "./img/dragon-flipped.png";
 
@@ -40,7 +40,7 @@ loadImages(
   });
   player.bindKeyboardControls({});
   renderer.add(player);
-  renderer.camera.lock(player, { minYSpace: -Infinity });
+  renderer.camera.lock(player, { minXSpace: 300, minYSpace: 250 });
 
   renderer.add(
     new StaticBody({ x: 0, y: 500, width: 300, height: 100, color: "black" })
