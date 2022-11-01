@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "docs": "npx typedoc",
     "ts": "node buildTsDef.js",
-    "build": "rollup -c rollup.config.js && tsc && echo 'typescript files compiled' && npm run ts && npm run docs"
+    "build": "rollup -c rollup.config.js && tsc && echo 'typescript files compiled' && npm run docs"
   },
   "keywords": [],
   "author": "",
@@ -27,12 +27,15 @@
     "browserify": "^17.0.0",
     "doxdox": "^4.0.0-preview.19",
     "dts-bundle": "^0.7.3",
+    "dts-gen": "^0.6.1",
     "http-server": "^14.1.1",
-    "rollup": "^2.71.1",
+    "rollup": "^3.2.5",
     "rollup-plugin-scss": "^3.0.0",
-    "rollup-plugin-styles": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.51.0",
     "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "rollup-plugin-dts": "^5.0.0"
   }
 }
