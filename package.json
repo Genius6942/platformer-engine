@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "docs": "npx typedoc",
     "ts": "node buildTsDef.js",
-    "build": "rollup -c rollup.config.js && tsc && echo 'typescript files compiled'"
+    "build": "rollup -c rollup.config.js && tsc && echo 'typescript files compiled' && npm run ts && npm run docs"
   },
   "keywords": [],
   "author": "",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "entryPoints": ["./library/index.ts"],
+  "entryPoints": ["./library/index.ts", "./library/object.ts", "./library/camera.ts"],
   "out": "docs",
   "readme": "./package/README.md",
   "name": "platjs",
