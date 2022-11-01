@@ -9,7 +9,7 @@ const plugins = [styles(), nodeResolve({ extensions: [".ts"] }), typescript()];
 
 export default [
   {
-    input: "src/index.ts",
+    input: "library/index.ts",
     output: [
       {
         format: "esm",
@@ -22,7 +22,7 @@ export default [
   },
 
   {
-    input: "src/index.ts",
+    input: "library/index.ts",
     output: [
       {
         format: "umd",
@@ -41,7 +41,7 @@ export default [
   },
 
   {
-    input: "src/index.ts",
+    input: "library/index.ts",
     output: [
       {
         format: "umd",
