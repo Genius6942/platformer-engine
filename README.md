@@ -13,7 +13,7 @@ npm install platjs
 ```
 
 ```js
-import * as platjs from "platjs";
+import * as plat from "platjs";
 ```
 
 ### script tag
@@ -22,15 +22,17 @@ import * as platjs from "platjs";
 <script src="https://cdn.jsdelivr.net/npm/platjs"></script>
 ```
 
-
 # Use:
+
 ```js
-const { Renderer, ControlledBody, StaticBody} = platjs;
+const { Renderer, ControlledBody, StaticBody } = plat;
 
 // Create a renderer
 // This handles physics and rendering for you.
-const renderer = new Renderer().mount(document.body).enableFixedPosition().enablePhysics({});
-
+const renderer = new Renderer()
+  .mount(document.body)
+  .enableFixedPosition()
+  .enablePhysics({});
 
 // Create a player
 // Giving it a "color" property will make it render as that color.
@@ -40,7 +42,7 @@ const player = new ControlledBody({
   width: 30,
   height: 30,
   layer: 1,
-  color: 'blue',
+  color: "blue",
 });
 
 // Add the player to the renderer's list of objects to draw / update
@@ -52,7 +54,7 @@ player.bindKeyboardControls({});
 // lock the camera to the player (player stays at center of the screen)
 renderer.camera.lock(player);
 
-// create a body for the player to land / jump on 
+// create a body for the player to land / jump on
 renderer.add(
   new StaticBody({ x: 0, y: 500, width: 300, height: 100, color: "black" })
 );
