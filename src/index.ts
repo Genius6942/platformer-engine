@@ -1,5 +1,7 @@
 import { ControlledBody, Renderer, loadImages, StaticBody } from "../library";
+// @ts-ignore
 import playerLeftImg from "./img/dragon.png";
+// @ts-ignore
 import playerRightImg from "./img/dragon-flipped.png";
 
 const renderer = new Renderer();
