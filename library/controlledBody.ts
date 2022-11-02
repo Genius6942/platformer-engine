@@ -185,11 +185,12 @@ export default class ControlledBody extends PhysicalBody {
   }
   private updateHorizontalMovement(mulitplier: number) {
     if (this.keys.a || this.keys.left) {
-      this.v.x -= this.xAcceleration * mulitplier;
+      if (this.v.x > -this.maxXSpeed) this.v.x -= this.xAcceleration * mulitplier;
     }
     if (this.keys.d || this.keys.right) {
-      this.v.x += this.xAcceleration * mulitplier;
+      if (this.v.x < this.maxXSpeed)
+        this.v.x += this.xAcceleration * mulitplier;
     }
-    this.v.x = Math.max(-this.maxXSpeed, Math.min(this.maxXSpeed, this.v.x));
+    // this.v.x = Math.max(-this.maxXSpeed, Math.min(this.maxXSpeed, this.v.x));
   }
 }
