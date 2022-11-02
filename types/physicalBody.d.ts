@@ -6,7 +6,8 @@ export default class PhysicalBody extends GameObject {
     };
     isOnBody: boolean;
     friction: number;
-    constructor({ x, y, rotation, width, height, image, color, layer, render, update, }: {
+    mass: number;
+    constructor({ x, y, rotation, width, height, image, color, layer, mass, render, update, }: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -15,6 +16,7 @@ export default class PhysicalBody extends GameObject {
         image?: HTMLImageElement | null;
         color?: string | null;
         layer?: number;
+        mass?: number;
         render?: emptyRenderFunction | null;
         update?: (multiplier: number, self: PhysicalBody) => void;
     });

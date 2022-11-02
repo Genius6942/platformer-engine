@@ -40,9 +40,35 @@ loadImages(
       }
     },
   });
-  player.bindKeyboardControls({});
+  player.bindKeyboardControls({ arrowKeys: false, spaceJump: false });
   renderer.add(player);
   renderer.camera.lock(player, { minXSpace: 300, minYSpace: 250 });
+
+  const player2 = new ControlledBody({
+    x: 70,
+    y: 30,
+    width: 30,
+    height: 30,
+    image: images.playerLeft,
+    layer: 1,
+    wallJump: true,
+    update: (self) => {
+      if (
+        (self.keys.a || self.keys.left) &&
+        !(self.keys.d || self.keys.right)
+      ) {
+        self.image = images.playerLeft;
+      } else if (
+        !(self.keys.a || self.keys.left) &&
+        (self.keys.d || self.keys.right)
+      ) {
+        self.image = images.playerRight;
+      }
+    },
+  });
+  player2.bindKeyboardControls({ wasd: false, spaceJump: false });
+  renderer.add(player2);
+  renderer.camera.lock(player2, { minXSpace: 300, minYSpace: 250 });
 
   renderer.add(
     new StaticBody({ x: 0, y: 500, width: 300, height: 100, color: "black" })
@@ -96,6 +122,13 @@ loadImages(
       player.x = 30;
       player.y = 30;
     }
+    if (player2.y - player2.height / 2 > renderer.height) {
+      player2.v.y = 0;
+      player2.v.x = 0;
+      player2.x = 30;
+      player2.y = 30;
+    }
+
     renderer.render();
 
     if (dragging) {
