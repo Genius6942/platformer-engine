@@ -32,6 +32,7 @@ export default class ControlledBody extends PhysicalBody {
     image = null,
     color = null,
     layer = 0,
+    mass = 1,
     render = null,
     update = () => {},
     maxXSpeed = 5,
@@ -48,6 +49,7 @@ export default class ControlledBody extends PhysicalBody {
     image?: HTMLImageElement | null;
     color?: string | null;
     layer?: number;
+    mass?: number;
     render?: emptyRenderFunction | null;
     update?: (self: ControlledBody) => void;
     maxXSpeed?: number;
@@ -65,6 +67,7 @@ export default class ControlledBody extends PhysicalBody {
       image,
       color,
       layer,
+      mass,
       render,
       update: (mulitplier: number) => {
         update(this);

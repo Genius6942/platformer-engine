@@ -52,6 +52,7 @@ loadImages(
     image: images.playerLeft,
     layer: 1,
     wallJump: true,
+    mass: 2,
     update: (self) => {
       if (
         (self.keys.a || self.keys.left) &&

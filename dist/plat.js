@@ -189,7 +189,7 @@
 	}
 
 	class ControlledBody extends PhysicalBody {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, render = null, update = () => { }, maxXSpeed = 5, jumpVel = 13, maxJumps = 1, wallJump = false, wallPushOffSpeed = 3, }) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, render = null, update = () => { }, maxXSpeed = 5, jumpVel = 13, maxJumps = 1, wallJump = false, wallPushOffSpeed = 3, }) {
 	        super({
 	            x,
 	            y,
@@ -199,6 +199,7 @@
 	            image,
 	            color,
 	            layer,
+	            mass,
 	            render,
 	            update: (mulitplier) => {
 	                update(this);

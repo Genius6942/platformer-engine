@@ -22,7 +22,7 @@ export default class ControlledBody extends PhysicalBody {
      * 0 for left, 1 for center, 2 for right
      */
     wallSide: 0 | 1 | 2;
-    constructor({ x, y, rotation, width, height, image, color, layer, render, update, maxXSpeed, jumpVel, maxJumps, wallJump, wallPushOffSpeed, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, mass, render, update, maxXSpeed, jumpVel, maxJumps, wallJump, wallPushOffSpeed, }: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -31,6 +31,7 @@ export default class ControlledBody extends PhysicalBody {
         image?: HTMLImageElement | null;
         color?: string | null;
         layer?: number;
+        mass?: number;
         render?: emptyRenderFunction | null;
         update?: (self: ControlledBody) => void;
         maxXSpeed?: number;
