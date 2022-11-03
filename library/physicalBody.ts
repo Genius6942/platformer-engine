@@ -6,6 +6,7 @@ export default class PhysicalBody extends GameObject {
   isOnBody: boolean;
   friction: number;
   mass: number;
+  interactsWithPhysicalBodies: boolean;
   constructor({
     x = 0,
     y = 0,
@@ -16,6 +17,7 @@ export default class PhysicalBody extends GameObject {
     color = null,
     layer = 0,
     mass = 1,
+    interactsWithPhysicalBodies = true,
     render = null,
     update = () => {},
   }: {
@@ -28,6 +30,7 @@ export default class PhysicalBody extends GameObject {
     color?: string | null;
     layer?: number;
     mass?: number;
+    interactsWithPhysicalBodies?: boolean;
     render?: emptyRenderFunction | null;
     update?: (multiplier: number, self: PhysicalBody) => void;
   }) {
@@ -51,6 +54,8 @@ export default class PhysicalBody extends GameObject {
       x: 0,
       y: 0,
     };
+
+    this.interactsWithPhysicalBodies = interactsWithPhysicalBodies;
 
     this.mass = mass;
 

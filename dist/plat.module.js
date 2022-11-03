@@ -114,7 +114,7 @@ class GameObject {
 
 // import ControlledBody from "./controlledBody";
 class PhysicalBody extends GameObject {
-    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, render = null, update = () => { }, }) {
+    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, interactsWithPhysicalBodies = true, render = null, update = () => { }, }) {
         super({
             x,
             y,
@@ -154,10 +154,17 @@ class PhysicalBody extends GameObject {
             writable: true,
             value: void 0
         });
+        Object.defineProperty(this, "interactsWithPhysicalBodies", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
         this.v = {
             x: 0,
             y: 0,
         };
+        this.interactsWithPhysicalBodies = interactsWithPhysicalBodies;
         this.mass = mass;
         this.friction = 0.3;
         this.isOnBody = false;
@@ -573,7 +580,10 @@ class Renderer extends HTMLCanvasElement {
                         object.wallSide = 1;
                     for (const body of this.objects) {
                         if ((body instanceof StaticBody || body instanceof PhysicalBody) &&
-                            body._randomId !== object._randomId) {
+                            body._randomId !== object._randomId &&
+                            !(body instanceof PhysicalBody &&
+                                !body.interactsWithPhysicalBodies &&
+                                !object.interactsWithPhysicalBodies)) {
                             if (body.collides(big)) {
                                 // if started above then on platform
                                 if (startY + object.height / 2 <= body.y - body.height / 2) {

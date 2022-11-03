@@ -108,7 +108,12 @@ class Renderer extends HTMLCanvasElement {
           for (const body of this.objects) {
             if (
               (body instanceof StaticBody || body instanceof PhysicalBody) &&
-              body._randomId !== object._randomId
+              body._randomId !== object._randomId &&
+              !(
+                body instanceof PhysicalBody &&
+                !body.interactsWithPhysicalBodies &&
+                !object.interactsWithPhysicalBodies
+              )
             ) {
               if (body.collides(big)) {
                 // if started above then on platform
