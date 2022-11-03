@@ -1,6 +1,5 @@
 import nodeResolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
-import { terser } from "rollup-plugin-terser";
 
 const name = "plat";
 
@@ -39,16 +38,16 @@ export default [
     plugins: [...plugins],
   },
 
-  {
-    input: "library/index.ts",
-    output: [
-      {
-        format: "umd",
-        name: name,
-        file: "dist/" + name + ".min.js",
-        indent: "\t",
-      },
-    ],
-    plugins: [...plugins, terser()],
-  },
+  // {
+  //   input: "library/index.ts",
+  //   output: [
+  //     {
+  //       format: "umd",
+  //       name: name,
+  //       file: "dist/" + name + ".min.js",
+  //       indent: "\t",
+  //     },
+  //   ],
+  //   plugins: [...plugins, uglify()],
+  // },
 ];

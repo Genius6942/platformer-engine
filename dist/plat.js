@@ -571,13 +571,14 @@
 	                    if (object instanceof ControlledBody)
 	                        object.wallSide = 1;
 	                    for (const body of this.objects) {
-	                        if (body instanceof StaticBody || body instanceof PhysicalBody) {
+	                        if ((body instanceof StaticBody || body instanceof PhysicalBody) &&
+	                            body._randomId !== object._randomId) {
 	                            if (body.collides(big)) {
 	                                // if started above then on platform
 	                                if (startY + object.height / 2 <= body.y - body.height / 2) {
 	                                    object.y = body.y - body.height / 2 - object.height / 2;
 	                                    if (body instanceof PhysicalBody) {
-	                                        body.v.y = (object.v.y * object.mass) / body.mass;
+	                                        body.v.y += (object.v.y * object.mass) / body.mass;
 	                                        object.v.y = 0;
 	                                    }
 	                                    else {
@@ -591,7 +592,7 @@
 	                                    body.y + body.height / 2) {
 	                                    object.y = body.y + body.height / 2 + object.height / 2;
 	                                    if (body instanceof PhysicalBody) {
-	                                        body.v.y = (object.v.y * object.mass) / body.mass;
+	                                        body.v.y += (object.v.y * object.mass) / body.mass;
 	                                        object.v.y = 0;
 	                                    }
 	                                    else {
@@ -602,7 +603,7 @@
 	                                    body.x - body.width / 2) {
 	                                    object.x = body.x - body.width / 2 - object.width / 2;
 	                                    if (body instanceof PhysicalBody) {
-	                                        body.v.x = (object.v.x * object.mass) / body.mass;
+	                                        body.v.x += (object.v.x * object.mass) / body.mass;
 	                                        object.v.x = 0;
 	                                    }
 	                                    else {
@@ -619,7 +620,7 @@
 	                                    body.x + body.width / 2) {
 	                                    object.x = body.x + body.width / 2 + object.width / 2;
 	                                    if (body instanceof PhysicalBody) {
-	                                        body.v.x = (object.v.x * object.mass) / body.mass;
+	                                        body.v.x += (object.v.x * object.mass) / body.mass;
 	                                        object.v.x = 0;
 	                                    }
 	                                    else {
