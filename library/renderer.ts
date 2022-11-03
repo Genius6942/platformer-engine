@@ -9,6 +9,7 @@ class Renderer extends HTMLCanvasElement {
   objects: GameObject[];
   physics?: { gravity: number };
   camera: Camera;
+  forceNotInObject: boolean;
   constructor() {
     super();
 
@@ -22,6 +23,8 @@ class Renderer extends HTMLCanvasElement {
     this.render = this.render.bind(this);
 
     this.camera = new Camera(this);
+
+    this.forceNotInObject = true;
   }
 
   /**
@@ -170,71 +173,73 @@ class Renderer extends HTMLCanvasElement {
                   }
                   object.v.x = 0;
                 } else {
-                  // started in block
-                  const left =
-                    object.x - object.width / 2 - (body.x - body.width / 2);
-                  const right =
-                    body.x + body.width / 2 - (object.x + object.width / 2);
-                  const top =
-                    body.y - body.height / 2 - (object.y - object.height / 2);
-                  const bottom =
-                    body.y + body.height / 2 - (object.y + object.height / 2);
+                  if (this.forceNotInObject) {
+                    // started in block
+                    const left =
+                      object.x - object.width / 2 - (body.x - body.width / 2);
+                    const right =
+                      body.x + body.width / 2 - (object.x + object.width / 2);
+                    const top =
+                      body.y - body.height / 2 - (object.y - object.height / 2);
+                    const bottom =
+                      body.y + body.height / 2 - (object.y + object.height / 2);
 
-                  const val = Math.min(left, right, top, bottom);
-                  console.log(val);
-                  console.log(top, bottom, left, right);
+                    const val = Math.min(left, right, top, bottom);
+                    console.log(val);
+                    console.log(top, bottom, left, right);
 
-                  if (val === top) {
-                    object.y = body.y - body.height / 2 - object.height / 2;
-                    if (body instanceof PhysicalBody) {
-                      body.v.y += (object.v.y * object.mass) / body.mass;
-                      object.v.y = 0;
+                    if (val === top) {
+                      object.y = body.y - body.height / 2 - object.height / 2;
+                      if (body instanceof PhysicalBody) {
+                        body.v.y += (object.v.y * object.mass) / body.mass;
+                        object.v.y = 0;
+                      } else {
+                        object.v.y = 0;
+                      }
+                      object.isOnBody = true;
+                      if (object instanceof ControlledBody) object.jumps = 0;
+                    } else if (val === bottom) {
+                      object.y = body.y + body.height / 2 + object.height / 2;
+                      if (body instanceof PhysicalBody) {
+                        body.v.y += (object.v.y * object.mass) / body.mass;
+                        object.v.y = 0;
+                      } else {
+                        object.v.y = 0;
+                      }
+                    } else if (val === left) {
+                      object.x = body.x - body.width / 2 - object.width / 2;
+                      if (body instanceof PhysicalBody) {
+                        body.v.x += (object.v.x * object.mass) / body.mass;
+                        object.v.x = 0;
+                      } else {
+                        object.v.x = 0;
+                      }
+                      if (
+                        object instanceof ControlledBody &&
+                        !(body instanceof PhysicalBody) &&
+                        object.wallJumps
+                      ) {
+                        object.jumps = 0;
+                        object.wallSide = 0;
+                      }
                     } else {
-                      object.v.y = 0;
-                    }
-                    object.isOnBody = true;
-                    if (object instanceof ControlledBody) object.jumps = 0;
-                  } else if (val === bottom) {
-                    object.y = body.y + body.height / 2 + object.height / 2;
-                    if (body instanceof PhysicalBody) {
-                      body.v.y += (object.v.y * object.mass) / body.mass;
-                      object.v.y = 0;
-                    } else {
-                      object.v.y = 0;
-                    }
-                  } else if (val === left) {
-                    object.x = body.x - body.width / 2 - object.width / 2;
-                    if (body instanceof PhysicalBody) {
-                      body.v.x += (object.v.x * object.mass) / body.mass;
-                      object.v.x = 0;
-                    } else {
+                      object.x = body.x + body.width / 2 + object.width / 2;
+                      if (body instanceof PhysicalBody) {
+                        body.v.x += (object.v.x * object.mass) / body.mass;
+                        object.v.x = 0;
+                      } else {
+                        object.v.x = 0;
+                      }
+                      if (
+                        object instanceof ControlledBody &&
+                        !(body instanceof PhysicalBody) &&
+                        object.wallJumps
+                      ) {
+                        object.jumps = 0;
+                        object.wallSide = 2;
+                      }
                       object.v.x = 0;
                     }
-                    if (
-                      object instanceof ControlledBody &&
-                      !(body instanceof PhysicalBody) &&
-                      object.wallJumps
-                    ) {
-                      object.jumps = 0;
-                      object.wallSide = 0;
-                    }
-                  } else {
-                    object.x = body.x + body.width / 2 + object.width / 2;
-                    if (body instanceof PhysicalBody) {
-                      body.v.x += (object.v.x * object.mass) / body.mass;
-                      object.v.x = 0;
-                    } else {
-                      object.v.x = 0;
-                    }
-                    if (
-                      object instanceof ControlledBody &&
-                      !(body instanceof PhysicalBody) &&
-                      object.wallJumps
-                    ) {
-                      object.jumps = 0;
-                      object.wallSide = 2;
-                    }
-                    object.v.x = 0;
                   }
                 }
               }

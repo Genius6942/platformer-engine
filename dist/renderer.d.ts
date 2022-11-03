@@ -7,6 +7,7 @@ declare class Renderer extends HTMLCanvasElement {
         gravity: number;
     };
     camera: Camera;
+    forceNotInObject: boolean;
     constructor();
     /**
      * Makes images not blur when scaled
