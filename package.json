@@ -1,6 +1,6 @@
 {
   "name": "platjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "description": "Simple engine for platformer physics and rendering",
   "main": "dist/plat.js",
@@ -18,7 +18,13 @@
     "ts": "node buildTsDef.js",
     "build": "rollup -c rollup.config.js && uglifyjs dist/plat.js -o plat.min.js && tsc && echo 'typescript files compiled' && npm run docs"
   },
-  "keywords": [],
+  "keywords": [
+    "physics",
+    "web",
+    "canvas",
+    "platformer",
+    "2d"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
