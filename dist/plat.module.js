@@ -582,8 +582,8 @@ class Renderer extends HTMLCanvasElement {
                         if ((body instanceof StaticBody || body instanceof PhysicalBody) &&
                             body._randomId !== object._randomId &&
                             !(body instanceof PhysicalBody &&
-                                !body.interactsWithPhysicalBodies &&
-                                !object.interactsWithPhysicalBodies)) {
+                                (!body.interactsWithPhysicalBodies ||
+                                    !object.interactsWithPhysicalBodies))) {
                             if (body.collides(big)) {
                                 // if started above then on platform
                                 if (startY + object.height / 2 <= body.y - body.height / 2) {

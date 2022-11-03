@@ -111,8 +111,8 @@ class Renderer extends HTMLCanvasElement {
               body._randomId !== object._randomId &&
               !(
                 body instanceof PhysicalBody &&
-                !body.interactsWithPhysicalBodies &&
-                !object.interactsWithPhysicalBodies
+                (!body.interactsWithPhysicalBodies ||
+                  !object.interactsWithPhysicalBodies)
               )
             ) {
               if (body.collides(big)) {
