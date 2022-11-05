@@ -8,7 +8,7 @@ export default class PhysicalBody extends GameObject {
     friction: number;
     mass: number;
     interactsWithPhysicalBodies: boolean;
-    constructor({ x, y, rotation, width, height, image, color, layer, mass, interactsWithPhysicalBodies, render, update, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, mass, interactsWithPhysicalBodies, friction, render, update, }: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -19,6 +19,7 @@ export default class PhysicalBody extends GameObject {
         layer?: number;
         mass?: number;
         interactsWithPhysicalBodies?: boolean;
+        friction?: number;
         render?: emptyRenderFunction | null;
         update?: (multiplier: number, self: PhysicalBody) => void;
     });

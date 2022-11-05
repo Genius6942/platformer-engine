@@ -1,7 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 const aabb = (object1, object2) => {
     // AABB collision with x and y as center
     return (object1.x - object1.width / 2 < object2.x + object2.width / 2 &&
@@ -118,7 +116,7 @@ class GameObject {
 
 // import ControlledBody from "./controlledBody";
 class PhysicalBody extends GameObject {
-    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, interactsWithPhysicalBodies = true, render = null, update = () => { }, }) {
+    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, interactsWithPhysicalBodies = true, friction = 0.3, render = null, update = () => { }, }) {
         super({
             x,
             y,
@@ -170,7 +168,7 @@ class PhysicalBody extends GameObject {
         };
         this.interactsWithPhysicalBodies = interactsWithPhysicalBodies;
         this.mass = mass;
-        this.friction = 0.3;
+        this.friction = friction;
         this.isOnBody = false;
     }
     applyFriction(multiplier) {
@@ -564,11 +562,11 @@ class Renderer extends HTMLCanvasElement {
         this.objects.forEach((object) => {
             if (this.physics) {
                 if (object instanceof PhysicalBody) {
-                    object.v.y += this.physics.gravity;
+                    object.v.y += this.physics.gravity * mulitplier;
                     object.update(mulitplier);
                     const { x: startX, y: startY } = object;
-                    object.x += object.v.x;
-                    object.y += object.v.y;
+                    object.x += object.v.x * mulitplier;
+                    object.y += object.v.y * mulitplier;
                     const bigX = (startX + object.x) / 2;
                     const bigY = (startY + object.y) / 2;
                     const bigWidth = Math.abs(startX - object.x) + object.width;
@@ -657,8 +655,6 @@ class Renderer extends HTMLCanvasElement {
                                         const top = body.y - body.height / 2 - (object.y - object.height / 2);
                                         const bottom = body.y + body.height / 2 - (object.y + object.height / 2);
                                         const val = Math.min(left, right, top, bottom);
-                                        console.log(val);
-                                        console.log(top, bottom, left, right);
                                         if (val === top) {
                                             object.y = body.y - body.height / 2 - object.height / 2;
                                             if (body instanceof PhysicalBody) {

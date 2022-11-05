@@ -1,5 +1,6 @@
 import nodeResolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
+import dts from "rollup-plugin-dts";
 
 const name = "plat";
 
@@ -38,16 +39,9 @@ export default [
     plugins: [...plugins],
   },
 
-  // {
-  //   input: "library/index.ts",
-  //   output: [
-  //     {
-  //       format: "umd",
-  //       name: name,
-  //       file: "dist/" + name + ".min.js",
-  //       indent: "\t",
-  //     },
-  //   ],
-  //   plugins: [...plugins, uglify()],
-  // },
+  {
+    input: "dist/index.d.ts",
+    output: [{ file: "dist/" + name + ".d.ts", format: "es" }],
+    plugins: [dts()],
+  },
 ];
