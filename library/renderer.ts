@@ -52,6 +52,8 @@ class Renderer extends HTMLCanvasElement {
     this.physics = {
       gravity,
     };
+
+    return this;
   }
 
   enableFixedPosition() {
@@ -84,6 +86,7 @@ class Renderer extends HTMLCanvasElement {
     } else {
       this.objects = this.objects.filter((object) => object !== item);
     }
+    return item;
   }
 
   /**

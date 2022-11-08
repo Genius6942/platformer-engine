@@ -17,11 +17,11 @@ declare class Renderer extends HTMLCanvasElement {
     enablePixelated(): this;
     enablePhysics({ gravity }: {
         gravity?: number | undefined;
-    }): void;
+    }): this;
     enableFixedPosition(): this;
     resize(): this;
     add(object: GameObject): GameObject;
-    destroy(item: GameObject | number): void;
+    destroy(item: GameObject | number): number | GameObject;
     /**
      * Mounts renderer to the dom
      */

@@ -543,6 +543,7 @@
 	        this.physics = {
 	            gravity,
 	        };
+	        return this;
 	    }
 	    enableFixedPosition() {
 	        this.style.position = "fixed";
@@ -572,6 +573,7 @@
 	        else {
 	            this.objects = this.objects.filter((object) => object !== item);
 	        }
+	        return item;
 	    }
 	    /**
 	     * Mounts renderer to the dom
