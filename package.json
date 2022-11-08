@@ -1,6 +1,6 @@
 {
   "name": "platjs",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "type": "module",
   "description": "Simple engine for platformer physics and rendering",
   "main": "dist/plat.js",
@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "docs": "npx typedoc",
     "ts": "node buildTsDef.js",
-    "build": "rollup -c rollup.config.js && uglifyjs dist/plat.js -o plat.min.js && tsc && echo 'typescript files compiled' && npm run docs"
+    "build": "rollup -c rollup.config.js && uglifyjs dist/plat.js -o plat.min.js && tsc && node buildTsDef.js && echo 'typescript files compiled' && npm run docs"
   },
   "keywords": [
     "physics",
@@ -31,8 +31,6 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^9.0.2",
     "browserify": "^17.0.0",
-    "doxdox": "^4.0.0-preview.19",
-    "dts-gen": "^0.6.1",
     "http-server": "^14.1.1",
     "rollup": "^3.2.5",
     "sass": "^1.51.0",

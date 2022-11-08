@@ -1,12 +1,13 @@
-declare type rect = {
+declare namespace plat {
+export type rect = {
     x: number;
     y: number;
     width: number;
     height: number;
 };
 
-declare type emptyRenderFunction = (this: GameObject, ctx: CanvasRenderingContext2D, self: GameObject) => void;
-declare class GameObject {
+export type emptyRenderFunction = (this: GameObject, ctx: CanvasRenderingContext2D, self: GameObject) => void;
+export class GameObject {
     x: number;
     y: number;
     rotation: number;
@@ -35,7 +36,7 @@ declare class GameObject {
 }
 //# sourceMappingURL=object.d.ts.map
 
-declare class PhysicalBody extends GameObject {
+export class PhysicalBody extends GameObject {
     v: {
         x: number;
         y: number;
@@ -62,7 +63,7 @@ declare class PhysicalBody extends GameObject {
     applyFriction(multiplier: number): void;
 }
 
-declare class ControlledBody extends PhysicalBody {
+export class ControlledBody extends PhysicalBody {
     maxXSpeed: number;
     jumpVel: number;
     keys: {
@@ -115,7 +116,7 @@ declare class ControlledBody extends PhysicalBody {
     private updateHorizontalMovement;
 }
 
-declare class Camera {
+export class Camera {
     renderer: Renderer;
     lockedObject: GameObject | null;
     defaultPos: {
@@ -145,7 +146,7 @@ declare class Camera {
     };
 }
 
-declare class Renderer extends HTMLCanvasElement {
+export class Renderer extends HTMLCanvasElement {
     ctx: CanvasRenderingContext2D;
     objects: GameObject[];
     physics?: {
@@ -176,7 +177,7 @@ declare class Renderer extends HTMLCanvasElement {
 }
 //# sourceMappingURL=renderer.d.ts.map
 
-declare class StaticBody extends GameObject {
+export class StaticBody extends GameObject {
     constructor({ x, y, rotation, width, height, image, color, layer, render, update, }: {
         x?: number;
         y?: number;
@@ -191,11 +192,11 @@ declare class StaticBody extends GameObject {
     });
 }
 
-declare function loadImages(images: {
+export function loadImages(images: {
     [key: string]: string;
 }, onProgress?: (loaded: number, total: number) => void): Promise<{
     [key: string]: HTMLImageElement;
 }>;
 //# sourceMappingURL=imageLoader.d.ts.map
 
-export { ControlledBody, GameObject, PhysicalBody, Renderer, StaticBody, loadImages };
+}
