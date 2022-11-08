@@ -14,7 +14,6 @@ class Renderer extends HTMLCanvasElement {
   constructor() {
     super();
 
-    this.resize();
     window.addEventListener("resize", () => this.resize());
 
     this.ctx = this.getContext("2d") as CanvasRenderingContext2D;

@@ -514,7 +514,6 @@
 	            writable: true,
 	            value: void 0
 	        });
-	        this.resize();
 	        window.addEventListener("resize", () => this.resize());
 	        this.ctx = this.getContext("2d");
 	        this.objects = [];
