@@ -811,7 +811,6 @@
 	}
 	function loadImages(images, onProgress = () => { }) {
 	    return __awaiter(this, void 0, void 0, function* () {
-	        console.group("loading progress");
 	        const loadedNumbers = Object.keys(images).map(() => 0);
 	        const totalNumbers = Object.keys(images).map(() => 1);
 	        const imgs = Object.keys(images).map((key, idx) => loadImage(key, images[key], (loaded, total) => {
@@ -821,7 +820,6 @@
 	            onProgress(loadedNumbers.reduce((a, b) => a + b), totalNumbers.reduce((a, b) => a + b));
 	        }));
 	        const loadedImgs = yield Promise.all(imgs);
-	        console.groupEnd();
 	        const finishedImgs = {};
 	        loadedImgs.forEach(({ name, img }) => {
 	            finishedImgs[name] = img;

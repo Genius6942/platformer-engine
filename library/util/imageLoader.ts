@@ -44,7 +44,6 @@ async function loadImages(
   images: { [key: string]: string },
   onProgress: (loaded: number, total: number) => void = () => {}
 ) {
-  console.group("loading progress");
   const loadedNumbers = Object.keys(images).map(() => 0);
   const totalNumbers = Object.keys(images).map(() => 1);
 
@@ -60,7 +59,6 @@ async function loadImages(
     })
   );
   const loadedImgs = await Promise.all(imgs);
-  console.groupEnd();
 
   const finishedImgs: { [key: string]: HTMLImageElement } = {};
 
