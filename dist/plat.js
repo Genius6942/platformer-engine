@@ -508,6 +508,12 @@
 	            writable: true,
 	            value: void 0
 	        });
+	        Object.defineProperty(this, "beforeRenderFuncs", {
+	            enumerable: true,
+	            configurable: true,
+	            writable: true,
+	            value: void 0
+	        });
 	        this.resize();
 	        window.addEventListener("resize", () => this.resize());
 	        this.ctx = this.getContext("2d");
@@ -515,6 +521,11 @@
 	        this.render = this.render.bind(this);
 	        this.camera = new Camera(this);
 	        this.forceNotInObject = true;
+	        this.beforeRenderFuncs = [];
+	    }
+	    beforeRender(func) {
+	        this.beforeRenderFuncs.push(func);
+	        return this;
 	    }
 	    /**
 	     * Makes images not blur when scaled
@@ -727,6 +738,7 @@
 	    render() {
 	        const { x: cameraX, y: cameraY } = this.camera.update();
 	        this.ctx.clearRect(0, 0, this.width, this.height);
+	        this.beforeRenderFuncs.forEach((func) => func());
 	        this.ctx.translate(this.width / 2 - cameraX, this.height / 2 - cameraY);
 	        this.objects
 	            .sort((a, b) => a.layer - b.layer)
@@ -777,6 +789,9 @@
 	                const blob = new Blob([xhr.response]);
 	                img.src = URL.createObjectURL(blob);
 	                resolve({ name: name, img: img });
+	            }
+	            else {
+	                reject("failed status: " + xhr.status.toString());
 	            }
 	        });
 	        xhr.addEventListener("progress", (e) => {

@@ -8,7 +8,9 @@ declare class Renderer extends HTMLCanvasElement {
     };
     camera: Camera;
     forceNotInObject: boolean;
+    private beforeRenderFuncs;
     constructor();
+    beforeRender(func: () => void): this;
     /**
      * Makes images not blur when scaled
      */

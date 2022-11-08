@@ -19,6 +19,8 @@ function loadImage(
         const blob = new Blob([xhr.response]);
         img.src = URL.createObjectURL(blob);
         resolve({ name: name, img: img });
+      } else {
+        reject("failed status: " + xhr.status.toString());
       }
     });
 

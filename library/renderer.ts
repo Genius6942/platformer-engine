@@ -10,6 +10,7 @@ class Renderer extends HTMLCanvasElement {
   physics?: { gravity: number };
   camera: Camera;
   forceNotInObject: boolean;
+  private beforeRenderFuncs: (() => void)[];
   constructor() {
     super();
 
@@ -25,6 +26,13 @@ class Renderer extends HTMLCanvasElement {
     this.camera = new Camera(this);
 
     this.forceNotInObject = true;
+
+    this.beforeRenderFuncs = [];
+  }
+
+  beforeRender(func: () => void) {
+    this.beforeRenderFuncs.push(func);
+    return this;
   }
 
   /**
@@ -257,6 +265,8 @@ class Renderer extends HTMLCanvasElement {
     const { x: cameraX, y: cameraY } = this.camera.update();
 
     this.ctx.clearRect(0, 0, this.width, this.height);
+
+    this.beforeRenderFuncs.forEach((func) => func());
 
     this.ctx.translate(this.width / 2 - cameraX, this.height / 2 - cameraY);
 
