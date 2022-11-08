@@ -19,7 +19,7 @@ declare class Renderer extends HTMLCanvasElement {
         gravity?: number | undefined;
     }): void;
     enableFixedPosition(): this;
-    resize(): void;
+    resize(): this;
     add(object: GameObject): GameObject;
     destroy(item: GameObject | number): void;
     /**

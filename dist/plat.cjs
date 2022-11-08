@@ -547,8 +547,15 @@ class Renderer extends HTMLCanvasElement {
         return this;
     }
     resize() {
-        this.width = window.innerWidth;
-        this.height = window.innerHeight;
+        if (this.parentElement) {
+            this.width = this.parentElement.offsetWidth;
+            this.height = this.parentElement.offsetHeight;
+        }
+        else {
+            this.width = window.innerWidth;
+            this.height = window.innerHeight;
+        }
+        return this;
     }
     add(object) {
         this.objects.push(object);
