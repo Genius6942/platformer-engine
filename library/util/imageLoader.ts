@@ -17,8 +17,13 @@ function loadImage(
     xhr.addEventListener("load", () => {
       if (xhr.status === 200) {
         const blob = new Blob([xhr.response]);
+        img.addEventListener("load", () => {
+          resolve({ name: name, img: img });
+        });
+        img.addEventListener("error", () => {
+          reject("image failed to load");
+        });
         img.src = URL.createObjectURL(blob);
-        resolve({ name: name, img: img });
       } else {
         reject("failed status: " + xhr.status.toString());
       }
