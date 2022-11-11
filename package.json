@@ -1,6 +1,6 @@
 {
   "name": "platjs",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "type": "module",
   "description": "Simple engine for platformer physics and rendering",
   "main": "dist/plat.js",
