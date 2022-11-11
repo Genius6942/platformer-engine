@@ -59,6 +59,18 @@ export default class Camera {
 
       if (this.minimums.y >= this.renderer.height / 2) {
         this.pos.y = this.lockedObject.y;
+      } else if (
+        this.lockedObject.y - this.pos.y + this.renderer.height / 2 <
+        this.minimums.y
+      ) {
+        this.pos.y =
+          this.lockedObject.y - this.minimums.y + this.renderer.height / 2;
+      } else if (
+        this.lockedObject.y - this.pos.y >
+        this.renderer.height / 2 - this.minimums.y
+      ) {
+        this.pos.y =
+          this.lockedObject.y + this.minimums.y - this.renderer.height / 2;
       }
     }
 

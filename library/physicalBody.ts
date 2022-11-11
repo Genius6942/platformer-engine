@@ -35,7 +35,7 @@ export default class PhysicalBody extends GameObject {
     friction?: number;
     render?: emptyRenderFunction | null;
     update?: (multiplier: number, self: PhysicalBody) => void;
-  }) {
+  } = {}) {
     super({
       x,
       y,

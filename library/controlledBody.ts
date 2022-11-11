@@ -57,7 +57,7 @@ export default class ControlledBody extends PhysicalBody {
     maxJumps?: number;
     wallJump?: boolean;
     wallPushOffSpeed?: number;
-  }) {
+  } = {}) {
     super({
       x,
       y,
@@ -119,7 +119,7 @@ export default class ControlledBody extends PhysicalBody {
     }
   }
 
-  bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true }) {
+  bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true } = {}) {
     if (wasd) {
       window.addEventListener("keydown", this.wasdKeyListener.bind(this), true);
       window.addEventListener("keyup", this.wasdKeyListener.bind(this), true);

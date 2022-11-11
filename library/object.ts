@@ -40,7 +40,7 @@ class GameObject {
     layer?: number;
     render?: emptyRenderFunction | null;
     update?: Function;
-  }) {
+  } = {}) {
     this.x = x;
     this.y = y;
 
