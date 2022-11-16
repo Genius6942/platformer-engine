@@ -29,6 +29,7 @@ class GameObject {
     layer = 0,
     render = null,
     update = () => {},
+		onCollide = () => {}
   }: {
     x?: number;
     y?: number;
@@ -40,6 +41,7 @@ class GameObject {
     layer?: number;
     render?: emptyRenderFunction | null;
     update?: Function;
+		onCollide?: (object: GameObject) => void;
   } = {}) {
     this.x = x;
     this.y = y;

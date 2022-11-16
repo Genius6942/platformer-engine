@@ -22,7 +22,7 @@ export default class ControlledBody extends PhysicalBody {
      * 0 for left, 1 for center, 2 for right
      */
     wallSide: 0 | 1 | 2;
-    constructor({ x, y, rotation, width, height, image, color, layer, mass, render, update, maxXSpeed, jumpVel, maxJumps, wallJump, wallPushOffSpeed, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, mass, render, update, maxXSpeed, jumpVel, maxJumps, wallJump, wallPushOffSpeed, }?: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -42,7 +42,7 @@ export default class ControlledBody extends PhysicalBody {
     });
     getPreventFriction(): boolean;
     jump(): void;
-    bindKeyboardControls({ wasd, arrowKeys, spaceJump }: {
+    bindKeyboardControls({ wasd, arrowKeys, spaceJump }?: {
         wasd?: boolean | undefined;
         arrowKeys?: boolean | undefined;
         spaceJump?: boolean | undefined;

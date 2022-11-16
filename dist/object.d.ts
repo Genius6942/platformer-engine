@@ -12,7 +12,7 @@ declare class GameObject {
     color: string | null;
     layer: number;
     _randomId: number;
-    constructor({ x, y, rotation, width, height, image, color, layer, render, update, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, render, update, }?: {
         x?: number;
         y?: number;
         rotation?: number;

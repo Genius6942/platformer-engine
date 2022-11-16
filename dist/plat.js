@@ -13,7 +13,7 @@
 	};
 
 	class GameObject {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, render = null, update = () => { }, }) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, render = null, update = () => { }, } = {}) {
 	        Object.defineProperty(this, "x", {
 	            enumerable: true,
 	            configurable: true,
@@ -120,7 +120,7 @@
 
 	// import ControlledBody from "./controlledBody";
 	class PhysicalBody extends GameObject {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, interactsWithPhysicalBodies = true, friction = 0.3, render = null, update = () => { }, }) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, interactsWithPhysicalBodies = true, friction = 0.3, render = null, update = () => { }, } = {}) {
 	        super({
 	            x,
 	            y,
@@ -196,7 +196,7 @@
 	}
 
 	class ControlledBody extends PhysicalBody {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, render = null, update = () => { }, maxXSpeed = 5, jumpVel = 13, maxJumps = 1, wallJump = false, wallPushOffSpeed = 3, }) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, render = null, update = () => { }, maxXSpeed = 5, jumpVel = 13, maxJumps = 1, wallJump = false, wallPushOffSpeed = 3, } = {}) {
 	        super({
 	            x,
 	            y,
@@ -313,7 +313,7 @@
 	            }
 	        }
 	    }
-	    bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true }) {
+	    bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true } = {}) {
 	        if (wasd) {
 	            window.addEventListener("keydown", this.wasdKeyListener.bind(this), true);
 	            window.addEventListener("keyup", this.wasdKeyListener.bind(this), true);
@@ -452,6 +452,16 @@
 	            }
 	            if (this.minimums.y >= this.renderer.height / 2) {
 	                this.pos.y = this.lockedObject.y;
+	            }
+	            else if (this.lockedObject.y - this.pos.y + this.renderer.height / 2 <
+	                this.minimums.y) {
+	                this.pos.y =
+	                    this.lockedObject.y - this.minimums.y + this.renderer.height / 2;
+	            }
+	            else if (this.lockedObject.y - this.pos.y >
+	                this.renderer.height / 2 - this.minimums.y) {
+	                this.pos.y =
+	                    this.lockedObject.y + this.minimums.y - this.renderer.height / 2;
 	            }
 	        }
 	        return this.pos;

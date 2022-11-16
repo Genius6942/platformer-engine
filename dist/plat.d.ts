@@ -1,13 +1,12 @@
-declare namespace plat {
-export type rect = {
+declare type rect = {
     x: number;
     y: number;
     width: number;
     height: number;
 };
 
-export type emptyRenderFunction = (this: GameObject, ctx: CanvasRenderingContext2D, self: GameObject) => void;
-export class GameObject {
+declare type emptyRenderFunction = (this: GameObject, ctx: CanvasRenderingContext2D, self: GameObject) => void;
+declare class GameObject {
     x: number;
     y: number;
     rotation: number;
@@ -19,7 +18,7 @@ export class GameObject {
     color: string | null;
     layer: number;
     _randomId: number;
-    constructor({ x, y, rotation, width, height, image, color, layer, render, update, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, render, update, }?: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -36,7 +35,7 @@ export class GameObject {
 }
 //# sourceMappingURL=object.d.ts.map
 
-export class PhysicalBody extends GameObject {
+declare class PhysicalBody extends GameObject {
     v: {
         x: number;
         y: number;
@@ -45,7 +44,7 @@ export class PhysicalBody extends GameObject {
     friction: number;
     mass: number;
     interactsWithPhysicalBodies: boolean;
-    constructor({ x, y, rotation, width, height, image, color, layer, mass, interactsWithPhysicalBodies, friction, render, update, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, mass, interactsWithPhysicalBodies, friction, render, update, }?: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -63,7 +62,7 @@ export class PhysicalBody extends GameObject {
     applyFriction(multiplier: number): void;
 }
 
-export class ControlledBody extends PhysicalBody {
+declare class ControlledBody extends PhysicalBody {
     maxXSpeed: number;
     jumpVel: number;
     keys: {
@@ -85,7 +84,7 @@ export class ControlledBody extends PhysicalBody {
      * 0 for left, 1 for center, 2 for right
      */
     wallSide: 0 | 1 | 2;
-    constructor({ x, y, rotation, width, height, image, color, layer, mass, render, update, maxXSpeed, jumpVel, maxJumps, wallJump, wallPushOffSpeed, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, mass, render, update, maxXSpeed, jumpVel, maxJumps, wallJump, wallPushOffSpeed, }?: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -105,7 +104,7 @@ export class ControlledBody extends PhysicalBody {
     });
     getPreventFriction(): boolean;
     jump(): void;
-    bindKeyboardControls({ wasd, arrowKeys, spaceJump }: {
+    bindKeyboardControls({ wasd, arrowKeys, spaceJump }?: {
         wasd?: boolean | undefined;
         arrowKeys?: boolean | undefined;
         spaceJump?: boolean | undefined;
@@ -116,7 +115,7 @@ export class ControlledBody extends PhysicalBody {
     private updateHorizontalMovement;
 }
 
-export class Camera {
+declare class Camera {
     renderer: Renderer;
     lockedObject: GameObject | null;
     defaultPos: {
@@ -146,7 +145,7 @@ export class Camera {
     };
 }
 
-export class Renderer extends HTMLCanvasElement {
+declare class Renderer extends HTMLCanvasElement {
     ctx: CanvasRenderingContext2D;
     objects: GameObject[];
     physics?: {
@@ -177,7 +176,7 @@ export class Renderer extends HTMLCanvasElement {
 }
 //# sourceMappingURL=renderer.d.ts.map
 
-export class StaticBody extends GameObject {
+declare class StaticBody extends GameObject {
     constructor({ x, y, rotation, width, height, image, color, layer, render, update, }: {
         x?: number;
         y?: number;
@@ -192,11 +191,11 @@ export class StaticBody extends GameObject {
     });
 }
 
-export function loadImages(images: {
+declare function loadImages(images: {
     [key: string]: string;
 }, onProgress?: (loaded: number, total: number) => void): Promise<{
     [key: string]: HTMLImageElement;
 }>;
 //# sourceMappingURL=imageLoader.d.ts.map
 
-}
+export { ControlledBody, GameObject, PhysicalBody, Renderer, StaticBody, loadImages };
