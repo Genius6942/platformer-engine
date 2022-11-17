@@ -1,4 +1,4 @@
-import { emptyRenderFunction } from "./object";
+import GameObject, { emptyRenderFunction } from "./object";
 import PhysicalBody from "./physicalBody";
 
 export default class ControlledBody extends PhysicalBody {
@@ -40,6 +40,7 @@ export default class ControlledBody extends PhysicalBody {
     maxJumps = 1,
     wallJump = false,
     wallPushOffSpeed = 3,
+    onCollide = () => {},
   }: {
     x?: number;
     y?: number;
@@ -57,6 +58,7 @@ export default class ControlledBody extends PhysicalBody {
     maxJumps?: number;
     wallJump?: boolean;
     wallPushOffSpeed?: number;
+    onCollide?: (object: GameObject) => void;
   } = {}) {
     super({
       x,
@@ -73,6 +75,7 @@ export default class ControlledBody extends PhysicalBody {
         update(this);
         this.updateHorizontalMovement(mulitplier);
       },
+      onCollide,
     });
 
     this.maxXSpeed = maxXSpeed;
@@ -119,7 +122,11 @@ export default class ControlledBody extends PhysicalBody {
     }
   }
 
-  bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true } = {}) {
+  bindKeyboardControls({
+    wasd = true,
+    arrowKeys = true,
+    spaceJump = true,
+  } = {}) {
     if (wasd) {
       window.addEventListener("keydown", this.wasdKeyListener.bind(this), true);
       window.addEventListener("keyup", this.wasdKeyListener.bind(this), true);
@@ -185,7 +192,8 @@ export default class ControlledBody extends PhysicalBody {
   }
   private updateHorizontalMovement(mulitplier: number) {
     if (this.keys.a || this.keys.left) {
-      if (this.v.x > -this.maxXSpeed) this.v.x -= this.xAcceleration * mulitplier;
+      if (this.v.x > -this.maxXSpeed)
+        this.v.x -= this.xAcceleration * mulitplier;
     }
     if (this.keys.d || this.keys.right) {
       if (this.v.x < this.maxXSpeed)

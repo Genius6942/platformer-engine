@@ -12,6 +12,7 @@ export default class StaticBody extends GameObject {
     layer = 0,
     render = null,
     update = () => {},
+    onCollide = () => {},
   }: {
     x?: number;
     y?: number;
@@ -23,6 +24,7 @@ export default class StaticBody extends GameObject {
     layer?: number;
     render?: emptyRenderFunction | null;
     update?: Function;
+    onCollide?: (object: GameObject) => void;
   }) {
     super({
       x,
@@ -35,6 +37,7 @@ export default class StaticBody extends GameObject {
       layer,
       render,
       update,
+      onCollide
     });
   }
 }

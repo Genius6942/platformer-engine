@@ -123,16 +123,18 @@ class Renderer extends HTMLCanvasElement {
           object.isOnBody = false;
           if (object instanceof ControlledBody) object.wallSide = 1;
           for (const body of this.objects) {
-            if (
-              (body instanceof StaticBody || body instanceof PhysicalBody) &&
-              body._randomId !== object._randomId &&
-              !(
-                body instanceof PhysicalBody &&
-                (!body.interactsWithPhysicalBodies ||
-                  !object.interactsWithPhysicalBodies)
-              )
-            ) {
-              if (body.collides(big)) {
+            if (body.collides(big)) {
+              body.onCollide(object);
+              object.onCollide(body);
+              if (
+                (body instanceof StaticBody || body instanceof PhysicalBody) &&
+                body._randomId !== object._randomId &&
+                !(
+                  body instanceof PhysicalBody &&
+                  (!body.interactsWithPhysicalBodies ||
+                    !object.interactsWithPhysicalBodies)
+                )
+              ) {
                 // if started above then on platform
                 if (startY + object.height / 2 <= body.y - body.height / 2) {
                   object.y = body.y - body.height / 2 - object.height / 2;
