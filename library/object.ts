@@ -18,6 +18,7 @@ class GameObject {
   color: string | null;
   layer: number;
   _randomId: number;
+  onCollide: (object: GameObject) => void;
   constructor({
     x = 0,
     y = 0,
@@ -61,6 +62,8 @@ class GameObject {
     this.layer = layer;
 
     this._randomId = Math.random();
+
+    this.onCollide = onCollide;
   }
 
   _render(ctx: CanvasRenderingContext2D) {
@@ -86,7 +89,7 @@ class GameObject {
     } else if (this.color) {
       ctx.fillStyle = this.color;
       ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
-    }
+  }
 
     ctx.restore();
   }

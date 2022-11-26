@@ -13,7 +13,7 @@
 	};
 
 	class GameObject {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, render = null, update = () => { }, } = {}) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, render = null, update = () => { }, onCollide = () => { } } = {}) {
 	        Object.defineProperty(this, "x", {
 	            enumerable: true,
 	            configurable: true,
@@ -80,6 +80,12 @@
 	            writable: true,
 	            value: void 0
 	        });
+	        Object.defineProperty(this, "onCollide", {
+	            enumerable: true,
+	            configurable: true,
+	            writable: true,
+	            value: void 0
+	        });
 	        this.x = x;
 	        this.y = y;
 	        this.rotation = rotation;
@@ -91,6 +97,7 @@
 	        this.update = update;
 	        this.layer = layer;
 	        this._randomId = Math.random();
+	        this.onCollide = onCollide;
 	    }
 	    _render(ctx) {
 	        ctx.save();
@@ -120,7 +127,7 @@
 
 	// import ControlledBody from "./controlledBody";
 	class PhysicalBody extends GameObject {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, interactsWithPhysicalBodies = true, friction = 0.3, render = null, update = () => { }, } = {}) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, interactsWithPhysicalBodies = true, friction = 0.3, render = null, update = () => { }, onCollide = () => { }, } = {}) {
 	        super({
 	            x,
 	            y,
@@ -135,6 +142,7 @@
 	                update(multiplier, this);
 	                this.applyFriction(multiplier);
 	            },
+	            onCollide,
 	        });
 	        Object.defineProperty(this, "v", {
 	            enumerable: true,
@@ -196,7 +204,7 @@
 	}
 
 	class ControlledBody extends PhysicalBody {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, render = null, update = () => { }, maxXSpeed = 5, jumpVel = 13, maxJumps = 1, wallJump = false, wallPushOffSpeed = 3, } = {}) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, mass = 1, render = null, update = () => { }, maxXSpeed = 5, jumpVel = 13, maxJumps = 1, wallJump = false, wallPushOffSpeed = 3, onCollide = () => { }, } = {}) {
 	        super({
 	            x,
 	            y,
@@ -212,6 +220,7 @@
 	                update(this);
 	                this.updateHorizontalMovement(mulitplier);
 	            },
+	            onCollide,
 	        });
 	        Object.defineProperty(this, "maxXSpeed", {
 	            enumerable: true,
@@ -313,7 +322,7 @@
 	            }
 	        }
 	    }
-	    bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true } = {}) {
+	    bindKeyboardControls({ wasd = true, arrowKeys = true, spaceJump = true, } = {}) {
 	        if (wasd) {
 	            window.addEventListener("keydown", this.wasdKeyListener.bind(this), true);
 	            window.addEventListener("keyup", this.wasdKeyListener.bind(this), true);
@@ -469,7 +478,7 @@
 	}
 
 	class StaticBody extends GameObject {
-	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, render = null, update = () => { }, }) {
+	    constructor({ x = 0, y = 0, rotation = 0, width = 0, height = 0, image = null, color = null, layer = 0, render = null, update = () => { }, onCollide = () => { }, }) {
 	        super({
 	            x,
 	            y,
@@ -481,6 +490,7 @@
 	            layer,
 	            render,
 	            update,
+	            onCollide
 	        });
 	    }
 	}
@@ -614,12 +624,14 @@
 	                    if (object instanceof ControlledBody)
 	                        object.wallSide = 1;
 	                    for (const body of this.objects) {
-	                        if ((body instanceof StaticBody || body instanceof PhysicalBody) &&
-	                            body._randomId !== object._randomId &&
-	                            !(body instanceof PhysicalBody &&
-	                                (!body.interactsWithPhysicalBodies ||
-	                                    !object.interactsWithPhysicalBodies))) {
-	                            if (body.collides(big)) {
+	                        if (body.collides(big)) {
+	                            body.onCollide(object);
+	                            object.onCollide(body);
+	                            if ((body instanceof StaticBody || body instanceof PhysicalBody) &&
+	                                body._randomId !== object._randomId &&
+	                                !(body instanceof PhysicalBody &&
+	                                    (!body.interactsWithPhysicalBodies ||
+	                                        !object.interactsWithPhysicalBodies))) {
 	                                // if started above then on platform
 	                                if (startY + object.height / 2 <= body.y - body.height / 2) {
 	                                    object.y = body.y - body.height / 2 - object.height / 2;

@@ -12,7 +12,8 @@ declare class GameObject {
     color: string | null;
     layer: number;
     _randomId: number;
-    constructor({ x, y, rotation, width, height, image, color, layer, render, update, }?: {
+    onCollide: (object: GameObject) => void;
+    constructor({ x, y, rotation, width, height, image, color, layer, render, update, onCollide }?: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -23,6 +24,7 @@ declare class GameObject {
         layer?: number;
         render?: emptyRenderFunction | null;
         update?: Function;
+        onCollide?: (object: GameObject) => void;
     });
     _render(ctx: CanvasRenderingContext2D): void;
     collides(object: rect): boolean;

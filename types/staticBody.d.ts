@@ -1,6 +1,6 @@
 import GameObject, { emptyRenderFunction } from "./object";
 export default class StaticBody extends GameObject {
-    constructor({ x, y, rotation, width, height, image, color, layer, render, update, }: {
+    constructor({ x, y, rotation, width, height, image, color, layer, render, update, onCollide, }: {
         x?: number;
         y?: number;
         rotation?: number;
@@ -11,6 +11,7 @@ export default class StaticBody extends GameObject {
         layer?: number;
         render?: emptyRenderFunction | null;
         update?: Function;
+        onCollide?: (object: GameObject) => void;
     });
 }
 //# sourceMappingURL=staticBody.d.ts.map

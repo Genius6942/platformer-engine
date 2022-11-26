@@ -21,6 +21,7 @@ export default class PhysicalBody extends GameObject {
     friction = 0.3,
     render = null,
     update = () => {},
+    onCollide = () => {},
   }: {
     x?: number;
     y?: number;
@@ -35,6 +36,7 @@ export default class PhysicalBody extends GameObject {
     friction?: number;
     render?: emptyRenderFunction | null;
     update?: (multiplier: number, self: PhysicalBody) => void;
+    onCollide?: (object: GameObject) => void;
   } = {}) {
     super({
       x,
@@ -50,6 +52,7 @@ export default class PhysicalBody extends GameObject {
         update(multiplier, this);
         this.applyFriction(multiplier);
       },
+      onCollide,
     });
 
     this.v = {
