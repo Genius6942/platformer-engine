@@ -197,10 +197,10 @@ export class StaticBody extends GameObject {
     });
 }
 
-export function loadImages(images: {
+export function loadImages<T extends {
     [key: string]: string;
-}, onProgress?: (loaded: number, total: number) => void): Promise<{
-    [key: string]: HTMLImageElement;
+}>(images: T, onProgress?: (loaded: number, total: number) => void): Promise<{
+    [K in keyof T]: HTMLImageElement;
 }>;
 //# sourceMappingURL=imageLoader.d.ts.map
 

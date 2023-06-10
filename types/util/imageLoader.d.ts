@@ -2,10 +2,10 @@ declare function loadImage(name: string, url: string, onProgress?: (loaded: numb
     name: string;
     img: HTMLImageElement;
 }>;
-declare function loadImages(images: {
+declare function loadImages<T extends {
     [key: string]: string;
-}, onProgress?: (loaded: number, total: number) => void): Promise<{
-    [key: string]: HTMLImageElement;
+}>(images: T, onProgress?: (loaded: number, total: number) => void): Promise<{
+    [K in keyof T]: HTMLImageElement;
 }>;
 export default loadImages;
 export { loadImage };
