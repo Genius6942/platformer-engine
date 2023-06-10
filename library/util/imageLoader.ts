@@ -45,10 +45,13 @@ function loadImage(
     xhr.send();
   });
 }
-async function loadImages(
-  images: { [key: string]: string },
+
+
+
+async function loadImages<T extends { [key: string]: string }>(
+  images: T,
   onProgress: (loaded: number, total: number) => void = () => {}
-) {
+): Promise<{ [K in keyof T]: HTMLImageElement }> {
   const loadedNumbers = Object.keys(images).map(() => 0);
   const totalNumbers = Object.keys(images).map(() => 1);
 
@@ -67,12 +70,10 @@ async function loadImages(
 
   const finishedImgs: { [key: string]: HTMLImageElement } = {};
 
-  loadedImgs.forEach(
-    ({ name, img }: { name: string; img: HTMLImageElement }) => {
-      finishedImgs[name] = img;
-    }
-  );
-  return finishedImgs;
+  loadedImgs.forEach(({ name, img }: { name: string; img: HTMLImageElement }) => {
+    finishedImgs[name] = img;
+  });
+  return finishedImgs as unknown as any;
 }
 
 export default loadImages;
