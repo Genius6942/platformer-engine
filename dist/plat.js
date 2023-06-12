@@ -766,14 +766,14 @@
 	        });
 	    }
 	    render() {
-	        const { x: cameraX, y: cameraY } = this.camera.update();
+	        this.camera.update();
 	        this.ctx.clearRect(0, 0, this.width, this.height);
 	        this.beforeRenderFuncs.forEach((func) => func());
-	        this.ctx.translate(this.width / 2 - cameraX, this.height / 2 - cameraY);
+	        this.ctx.translate(this.width / 2 - this.camera.pos.x, this.height / 2 - this.camera.pos.y);
 	        this.objects
 	            .sort((a, b) => a.layer - b.layer)
 	            .forEach((object) => object._render(this.ctx));
-	        this.ctx.translate(-this.width / 2 + cameraX, -this.height / 2 + cameraY);
+	        this.ctx.translate(-this.width / 2 + this.camera.pos.x, -this.height / 2 + this.camera.pos.y);
 	    }
 	}
 	customElements.define("game-renderer", Renderer, { extends: "canvas" });
